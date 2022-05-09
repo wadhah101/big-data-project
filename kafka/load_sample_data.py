@@ -1,23 +1,29 @@
 import pandas as pd
 import kafka
 import json
+from kafka.admin import KafkaAdminClient, NewTopic
+import time
 
 producer = kafka.KafkaProducer(
-    value_serializer=lambda v: json.dumps(v).encode('utf-8'),
-    bootstrap_servers='localhost:9092')
+    bootstrap_servers=['localhost:9093'],
+    value_serializer=lambda x: json.dumps(x).encode('utf-8'))
 
-
-def load_json():
+def load_json_batch():
     with open("samples/filebeats/temp.json", "r") as f:
         data: list = json.load(f)
 
     for i in data:
         producer.send('sample', i)
 
-        # codec => json_lines {
-        #   target => "[document]"
-        #   delimiter => ","
-        # }
+
+def load_json_continue():
+    with open("samples/filebeats/temp.json", "r") as f:
+        data: list = json.load(f)
+
+    while True :
+      for i in data:
+        producer.send('sample', i)
+        time.sleep(1)
 
 
-load_json()
+load_json_continue()
