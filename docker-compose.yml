@@ -106,6 +106,40 @@ services:
     depends_on:
       - zookeeper
 
+  ##########################
+  # casndra cluster
+  ##########################
+
+  cassandra:
+    image: docker.io/bitnami/cassandra:4.0
+    ports:
+      - 7000:7000
+      - 9042:9042
+    volumes:
+      - cassandra_data:/bitnami
+    environment:
+      - CASSANDRA_SEEDS=cassandra,cassandra2
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_PASSWORD=cassandra
+      # By default, Cassandra autodetects the available host memory and takes as much as it can.
+      # Therefore, memory options are mandatory if multiple Cassandras are launched in the same node.
+      - MAX_HEAP_SIZE=1G
+      - HEAP_NEWSIZE=200M
+  cassandra2:
+    image: docker.io/bitnami/cassandra:4.0
+    ports:
+      - 7001:7000
+      - 9043:9042
+    volumes:
+      - cassandra2_data:/bitnami
+    environment:
+      - CASSANDRA_SEEDS=cassandra,cassandra2
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_PASSWORD=cassandra
+      # By default, Cassandra autodetects the available host memory and takes as much as it can.
+      # Therefore, memory options are mandatory if multiple Cassandras are launched in the same node.
+
 volumes:
   hadoop_namenode:
   hadoop_datanode:
@@ -113,4 +147,8 @@ volumes:
   zookeeper_data:
     driver: local
   kafka_data:
+    driver: local
+  cassandra_data:
+    driver: local
+  cassandra2_data:
     driver: local
