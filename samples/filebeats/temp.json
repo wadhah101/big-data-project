@@ -1,0 +1,132 @@
+[
+  {
+    "@version": "1",
+    "event": {
+      "timezone": "+01:00",
+      "dataset": "system.auth",
+      "module": "system",
+      "original": "May  9 09:59:54 tesnime-VirtualBox gdm-password]: gkr-pam: unlocked login keyring"
+    },
+    "fileset": {
+      "name": "auth"
+    },
+    "ecs": {
+      "version": "1.12.0"
+    },
+    "tags": [
+      "beats_input_codec_plain_applied"
+    ],
+    "host": {
+      "os": {
+        "family": "debian",
+        "name": "Ubuntu",
+        "codename": "focal",
+        "type": "linux",
+        "platform": "ubuntu",
+        "version": "20.04.1 LTS (Focal Fossa)",
+        "kernel": "5.13.0-40-generic"
+      },
+      "id": "46e49da352e046469f9cec3405f06ea0",
+      "name": "tesnime-VirtualBox",
+      "mac": [
+        "08:00:27:d7:ff:a5",
+        "08:00:27:47:cb:62"
+      ],
+      "hostname": "tesnime-VirtualBox",
+      "ip": [
+        "10.0.2.15",
+        "fe80::793d:c9f7:c960:8906",
+        "192.168.56.101",
+        "fe80::58:c43:dec4:b7d"
+      ],
+      "containerized": false,
+      "architecture": "x86_64"
+    },
+    "@timestamp": "2022-05-09T09:03:36.063Z",
+    "message": "May  9 09:59:54 tesnime-VirtualBox gdm-password]: gkr-pam: unlocked login keyring",
+    "service": {
+      "type": "system"
+    },
+    "agent": {
+      "id": "c59a8575-c53a-4756-9edc-8f89e788291d",
+      "type": "filebeat",
+      "name": "tesnime-VirtualBox",
+      "version": "8.2.0",
+      "ephemeral_id": "c50cbbc1-9f2b-4442-86a5-511c4efb85e3"
+    },
+    "input": {
+      "type": "log"
+    },
+    "log": {
+      "file": {
+        "path": "/var/log/auth.log"
+      },
+      "offset": 58409
+    }
+  },
+  {
+    "@version": "1",
+    "event": {
+      "timezone": "+01:00",
+      "dataset": "system.auth",
+      "module": "system",
+      "original": "May  9 10:03:31 tesnime-VirtualBox sudo: pam_unix(sudo:session): session closed for user root"
+    },
+    "ecs": {
+      "version": "1.12.0"
+    },
+    "fileset": {
+      "name": "auth"
+    },
+    "tags": [
+      "beats_input_codec_plain_applied"
+    ],
+    "host": {
+      "os": {
+        "family": "debian",
+        "name": "Ubuntu",
+        "codename": "focal",
+        "type": "linux",
+        "platform": "ubuntu",
+        "version": "20.04.1 LTS (Focal Fossa)",
+        "kernel": "5.13.0-40-generic"
+      },
+      "id": "46e49da352e046469f9cec3405f06ea0",
+      "name": "tesnime-VirtualBox",
+      "mac": [
+        "08:00:27:d7:ff:a5",
+        "08:00:27:47:cb:62"
+      ],
+      "hostname": "tesnime-VirtualBox",
+      "ip": [
+        "10.0.2.15",
+        "fe80::793d:c9f7:c960:8906",
+        "192.168.56.101",
+        "fe80::58:c43:dec4:b7d"
+      ],
+      "containerized": false,
+      "architecture": "x86_64"
+    },
+    "@timestamp": "2022-05-09T09:03:36.084Z",
+    "message": "May  9 10:03:31 tesnime-VirtualBox sudo: pam_unix(sudo:session): session closed for user root",
+    "service": {
+      "type": "system"
+    },
+    "agent": {
+      "id": "c59a8575-c53a-4756-9edc-8f89e788291d",
+      "type": "filebeat",
+      "name": "tesnime-VirtualBox",
+      "version": "8.2.0",
+      "ephemeral_id": "c50cbbc1-9f2b-4442-86a5-511c4efb85e3"
+    },
+    "log": {
+      "file": {
+        "path": "/var/log/auth.log"
+      },
+      "offset": 58978
+    },
+    "input": {
+      "type": "log"
+    }
+  }
+]
