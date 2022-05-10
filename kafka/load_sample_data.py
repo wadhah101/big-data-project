@@ -17,13 +17,14 @@ def load_json_batch():
 
 
 def load_json_continue():
-    with open("samples/filebeats/temp.json", "r") as f:
+    with open("logstash/output/filebeat.json", "r") as f:
         data: list = json.load(f)
 
     while True :
       for i in data:
-        producer.send('sample', i)
+        producer.send('filebeasts', i)
         time.sleep(1)
 
 
 load_json_continue()
+
