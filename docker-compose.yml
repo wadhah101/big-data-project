@@ -114,7 +114,18 @@ services:
       - zookeeper
 
   ##########################
-  # casndra cluster
+  # logstash
+  ##########################
+  logstash:
+    image: docker.io/bitnami/logstash:8.2.0
+    ports:
+      - "5044:5044"
+    volumes:
+      - ./logstash/pipeline:/opt/bitnami/logstash/pipeline
+      - ./logstash/output:/opt/bitnami/logstash/output
+
+  ##########################
+  # cassandra cluster
   ##########################
 
   cassandra:
