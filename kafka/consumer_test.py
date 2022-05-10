@@ -4,7 +4,7 @@ import json
 from kafka.admin import KafkaAdminClient, NewTopic
 
 consumer = kafka.KafkaConsumer(
-    'sample',
+    'filebeasts',
     value_deserializer=lambda m: json.loads(m.decode('utf-8')),
     bootstrap_servers=['localhost:9093'])
 
