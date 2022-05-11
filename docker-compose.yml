@@ -174,7 +174,7 @@ services:
   flink-taskmanager:
     image: flink:latest
     depends_on:
-      - jobmanager
+      - flink-jobmanager
     command: taskmanager
     scale: 1
     environment:
