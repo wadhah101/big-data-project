@@ -123,12 +123,21 @@ services:
       - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
 
   ##########################
+  # filebeat
+  ##########################
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.2.0
+    command: filebeat -e --strict.perms=false
+    user: root
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - /var/log:/usr/share/var/log
+
+  ##########################
   # logstash
   ##########################
   logstash:
     image: docker.io/bitnami/logstash:8.2.0
-    depends_on:
-      - metricbeat
     ports:
       - "5044:5044"
     volumes:
