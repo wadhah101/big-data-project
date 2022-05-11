@@ -114,10 +114,21 @@ services:
       - zookeeper
 
   ##########################
+  # metricbeat
+  ##########################
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:8.2.0
+    command: metricbeat -e --strict.perms=false
+    volumes:
+      - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+
+  ##########################
   # logstash
   ##########################
   logstash:
     image: docker.io/bitnami/logstash:8.2.0
+    depends_on:
+      - metricbeat
     ports:
       - "5044:5044"
     volumes:
@@ -170,7 +181,7 @@ services:
     environment:
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: flink-jobmanager        
+        jobmanager.rpc.address: flink-jobmanager
   flink-taskmanager:
     image: flink:latest
     depends_on:
@@ -181,7 +192,7 @@ services:
       - |
         FLINK_PROPERTIES=
         jobmanager.rpc.address: flink-jobmanager
-        taskmanager.numberOfTaskSlots: 2    
+        taskmanager.numberOfTaskSlots: 2
 
 volumes:
   hadoop_namenode:
