@@ -134,51 +134,10 @@ services:
     volumes:
       - ./logstash/pipeline:/opt/bitnami/logstash/pipeline
       - ./logstash/output:/opt/bitnami/logstash/output
-
   ##########################
-  # cassandra cluster
+  # mongo cluster
   ##########################
 
-  cassandra:
-    image: docker.io/bitnami/cassandra:4.0
-    ports:
-      - 7000:7000
-      - 9042:9042
-    volumes:
-      - cassandra_data:/bitnami
-    environment:
-      - CASSANDRA_SEEDS=cassandra,cassandra2
-      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
-      - CASSANDRA_PASSWORD_SEEDER=yes
-      - CASSANDRA_PASSWORD=cassandra
-      # By default, Cassandra autodetects the available host memory and takes as much as it can.
-      # Therefore, memory options are mandatory if multiple Cassandras are launched in the same node.
-      - MAX_HEAP_SIZE=
-      - HEAP_NEWSIZE=200M
-      ##########################
-      # flink streaming
-      ##########################
-
-  flink-jobmanager:
-    image: flink:latest
-    ports:
-      - "8081:8081"
-    command: jobmanager
-    environment:
-      - |
-        FLINK_PROPERTIES=
-        jobmanager.rpc.address: flink-jobmanager
-  flink-taskmanager:
-    image: flink:latest
-    depends_on:
-      - flink-jobmanager
-    command: taskmanager
-    scale: 1
-    environment:
-      - |
-        FLINK_PROPERTIES=
-        jobmanager.rpc.address: flink-jobmanager
-        taskmanager.numberOfTaskSlots: 2
 
 volumes:
   hadoop_namenode:
