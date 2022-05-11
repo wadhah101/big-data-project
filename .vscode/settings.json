@@ -1,0 +1,5 @@
+{
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true
+}
