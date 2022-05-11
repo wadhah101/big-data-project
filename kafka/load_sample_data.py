@@ -1,4 +1,3 @@
-import pandas as pd
 import kafka
 import json
 from kafka.admin import KafkaAdminClient, NewTopic
@@ -23,6 +22,7 @@ def load_json_continue():
     while True :
       for i in data:
         producer.send('filebeasts', i)
+        print(json.dumps(i , indent=2) )
         time.sleep(1)
 
 
