@@ -18,6 +18,8 @@
 
 package org.example;
 
+import beats.FileBeatsData;
+import beats.FileBeatsDataDeserializer;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
 import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.connector.kafka.source.KafkaSource;
@@ -34,17 +36,19 @@ public class DataStreamJob {
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
 
-		KafkaSource<String> source = KafkaSource.<String>builder()
+		KafkaSource<FileBeatsData> source = KafkaSource.<FileBeatsData>builder()
 				.setBootstrapServers("localhost:9093")
 				.setTopics("filebeasts")
 				.setGroupId("flink")
 				.setStartingOffsets(OffsetsInitializer.earliest())
-				.setValueOnlyDeserializer(new SimpleStringSchema())
+				.setValueOnlyDeserializer(new FileBeatsDataDeserializer())
 				.build();
 
-		DataStream<String> kafkadata = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Beats Kafka");
+		DataStream<FileBeatsData> kafkaData = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Beats Kafka");
 
-		kafkadata.print();
+		kafkaData.map(e -> e.message).print();
+
+		env.execute();
 
 	}
 }
