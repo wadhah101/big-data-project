@@ -20,14 +20,15 @@ package org.example;
 
 import beats.FileBeatsData;
 import beats.FileBeatsDataDeserializer;
+import com.datastax.driver.core.Cluster;
+import com.datastax.driver.mapping.Mapper;
 import org.apache.flink.api.common.eventtime.WatermarkStrategy;
-import org.apache.flink.api.common.serialization.SimpleStringSchema;
 import org.apache.flink.connector.kafka.source.KafkaSource;
 import org.apache.flink.connector.kafka.source.enumerator.initializer.OffsetsInitializer;
 import org.apache.flink.streaming.api.datastream.DataStream;
-import org.apache.flink.streaming.api.datastream.SingleOutputStreamOperator;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.util.CloseableIterator;
+import org.apache.flink.streaming.connectors.cassandra.CassandraSink;
+import org.apache.flink.streaming.connectors.cassandra.ClusterBuilder;
 
 
 public class DataStreamJob {
@@ -46,8 +47,17 @@ public class DataStreamJob {
 
 		DataStream<FileBeatsData> kafkaData = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Beats Kafka");
 
-		kafkaData.keyBy(e -> e.service.type);
+		DataStream<FileBeatsData> b = kafkaData.filter(e -> e.service.type.equals("system"));
 
+
+
+		CassandraSink<FileBeatsData> sink = CassandraSink.addSink(kafkaData)
+
+				.setHost("localhost" , 9042 )
+
+				.setMapperOptions(() -> new Mapper.Option[]{Mapper.Option.saveNullFields(true)})
+				.build();
+		
 		env.execute();
 
 	}
