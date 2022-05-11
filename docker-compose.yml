@@ -123,12 +123,21 @@ services:
       - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
 
   ##########################
+  # filebeat
+  ##########################
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.2.0
+    command: filebeat -e --strict.perms=false
+    user: root
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+      - /var/log:/usr/share/var/log
+
+  ##########################
   # logstash
   ##########################
   logstash:
     image: docker.io/bitnami/logstash:8.2.0
-    depends_on:
-      - metricbeat
     ports:
       - "5044:5044"
     volumes:
@@ -155,9 +164,24 @@ services:
       # Therefore, memory options are mandatory if multiple Cassandras are launched in the same node.
       - MAX_HEAP_SIZE=
       - HEAP_NEWSIZE=200M
-      ##########################
-      # flink streaming
-      ##########################
+
+  cassandra2:
+    image: docker.io/bitnami/cassandra:4.0
+    ports:
+      - 7001:7000
+      - 9043:9042
+    volumes:
+      - cassandra2_data:/bitnami
+    environment:
+      - CASSANDRA_SEEDS=cassandra,cassandra2
+      - CASSANDRA_CLUSTER_NAME=cassandra-cluster
+      - CASSANDRA_PASSWORD=cassandra
+      # By default, Cassandra autodetects the available host memory and takes as much as it can.
+      # Therefore, memory options are mandatory if multiple Cassandras are launched in the same node.
+
+  ##########################
+  # flink streaming
+  ##########################
 
   flink-jobmanager:
     image: flink:latest
