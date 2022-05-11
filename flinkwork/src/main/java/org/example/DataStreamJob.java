@@ -46,7 +46,7 @@ public class DataStreamJob {
 
 		DataStream<FileBeatsData> kafkaData = env.fromSource(source, WatermarkStrategy.noWatermarks(), "Beats Kafka");
 
-		kafkaData.map(e -> e.message).print();
+		kafkaData.keyBy(e -> e.service.type);
 
 		env.execute();
 

@@ -18,9 +18,7 @@ public class FileBeatsDataDeserializer implements DeserializationSchema<FileBeat
     public FileBeatsData deserialize(byte[] bytes) throws IOException {
         String line = new String(bytes, StandardCharsets.UTF_8);
         Gson gson = new Gson();
-
-        FileBeatsData result = gson.fromJson(line ,FileBeatsData.class );
-        return result;
+        return gson.fromJson(line ,FileBeatsData.class );
     }
 
     @Override
