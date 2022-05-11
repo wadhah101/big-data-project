@@ -1,0 +1,15 @@
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+filebeat.modules:
+  - module: system
+    syslog:
+      enabled: true
+      var.paths: ["/usr/share/var/log/syslog"]
+    auth:
+      enabled: true
+      var.paths: ["/usr/share/var/log/auth.log"]
+
+output.logstash:
+  hosts: ["logstash:5044"]
