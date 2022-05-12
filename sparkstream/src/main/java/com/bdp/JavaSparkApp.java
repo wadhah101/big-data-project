@@ -1,7 +1,5 @@
 package com.bdp;
 
-import java.util.concurrent.TimeoutException;
-
 import org.apache.spark.SparkConf;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
@@ -17,6 +15,7 @@ public class JavaSparkApp {
         JavaStreamingContext jsc = new JavaStreamingContext(sparkConf,
                 Durations.seconds(1));
 
+        jsc.sparkContext().setLogLevel("WARN");
         ProcessFileBeats.process(jsc);
         ProcessMetricBeats.process(jsc);
 

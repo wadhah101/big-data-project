@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.LogManager;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -42,11 +43,14 @@ public class ProcessFileBeats {
           doc.append("source", "beats");
           filebeatsCollection.insertOne(doc);
         }
-        System.out.println(result);
-        System.out.println("Inserted Data Done");
 
+        if (result.size() != 0) {
+          System.out.println("filebeats : Inserted Data Done");
+        } else {
+          System.out.println("filebeats : Got no data in this window");
+        }
       } else {
-        System.out.println("Got no data in this window");
+        System.out.println("filebeats : Got no data in this window");
       }
 
     });

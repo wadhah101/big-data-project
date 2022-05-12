@@ -42,11 +42,14 @@ public class ProcessMetricBeats {
           doc.append("source", "beats");
           filebeatsCollection.insertOne(doc);
         }
-        System.out.println(result);
-        System.out.println("Inserted Data Done");
+        if (result.size() != 0) {
+          System.out.println("metricbeat : Inserted Data Done");
+        } else {
+          System.out.println("metricbeat : Got no data in this window");
+        }
 
       } else {
-        System.out.println("Got no data in this window");
+        System.out.println("metricbeat : Got no data in this window");
       }
 
     });
