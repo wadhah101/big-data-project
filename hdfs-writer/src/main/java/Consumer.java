@@ -31,13 +31,13 @@ public class Consumer {
         System.out.println("Subscribed to topic: " + topicName);
 
         HDFSWriter writer = new HDFSWriter(new URI("hdfs://localhost:9000/"), "/user/root/target-logs/logs.txt");
-        writer.write("Hello!");
 
         while(true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records){
                 try {
                     writer.write(record.key() + record.value());
+                    System.out.println(record.key() + record.value());
                 }catch (Exception e) {
                     e.printStackTrace();
                 }

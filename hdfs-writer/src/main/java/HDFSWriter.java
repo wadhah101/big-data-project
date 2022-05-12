@@ -9,20 +9,21 @@ import java.net.URISyntaxException;
 
 public class HDFSWriter {
     private final FileSystem fs;
-    private final String targetPath;
+    FSDataOutputStream out;
+
 
     public HDFSWriter(URI uri, String targetPath) throws URISyntaxException, IOException {
         this.fs = FileSystem.get(uri, new Configuration());
-        this.targetPath = targetPath;
+        this.out = fs.create(new Path(targetPath));
     }
 
     public void write(String value) throws IOException {
-        FSDataOutputStream out = fs.create(new Path(targetPath));
         out.writeUTF(value);
-        out.close();
+
     }
 
     public void close() throws Exception{
+        out.close();
         fs.close();
     }
 
