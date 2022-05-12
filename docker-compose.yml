@@ -64,8 +64,10 @@ services:
   ##########################
 
   spark:
-    image: docker.io/bitnami/spark:3
+    build: sparkstream
     environment:
+      - KAFKA_SERVER="kafka:9093"
+      - MONGO_URI="mongodb://bdp:password@mongo:27017"
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
       - SPARK_RPC_ENCRYPTION_ENABLED=no

@@ -6,7 +6,10 @@ import com.mongodb.client.MongoDatabase;
 
 public class MyMongoClient {
   static MongoDatabase getMongoDatabase() {
-    String uri = "mongodb://bdp:password@localhost:27017";
+
+    final String defaultUri = "mongodb://bdp:password@localhost:27017";
+
+    String uri = System.getenv().getOrDefault("MONGO_URI", defaultUri);
 
     MongoClient mongoClient = MongoClients.create(uri);
 
