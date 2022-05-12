@@ -121,6 +121,8 @@ services:
     command: metricbeat -e --strict.perms=false
     volumes:
       - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
+    depends_on:
+      - logstash
 
   ##########################
   # filebeat
@@ -132,7 +134,8 @@ services:
     volumes:
       - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
       - /var/log:/usr/share/var/log
-
+    depends_on:
+      - logstash
   ##########################
   # logstash
   ##########################

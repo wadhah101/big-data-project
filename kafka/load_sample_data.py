@@ -16,7 +16,7 @@ def load_json_batch():
 
 
 def load_json_continue():
-    with open("logstash/output/filebeat.json", "r") as f:
+    with open("samples/filebeats/filebeat.json", "r") as f:
         data: list = json.load(f)
 
     while True :
