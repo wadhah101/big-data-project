@@ -3,12 +3,11 @@ package com.bdp;
 import java.util.concurrent.TimeoutException;
 
 import org.apache.spark.SparkConf;
-import org.apache.spark.sql.streaming.StreamingQueryException;
 import org.apache.spark.streaming.Durations;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
 
 public class JavaSparkApp {
-    public static void main(String[] args) throws InterruptedException, TimeoutException, StreamingQueryException {
+    public static void main(String[] args) throws Exception {
         System.setProperty("hadoop.home.dir", "/");
 
         SparkConf sparkConf = new SparkConf();
