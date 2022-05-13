@@ -9,7 +9,7 @@ import java.net.URISyntaxException;
 
 public class HDFSWriter {
     private final FileSystem fs;
-    FSDataOutputStream out;
+    private final FSDataOutputStream out;
 
 
     public HDFSWriter(URI uri, String targetPath) throws URISyntaxException, IOException {

@@ -1,5 +1,4 @@
-import java.io.FileWriter;
-import java.io.IOException;
+import org.json.*;
 import java.net.URI;
 import java.util.Collections;
 import java.util.Properties;
@@ -36,8 +35,8 @@ public class Consumer {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records){
                 try {
-                    writer.write(record.key() + record.value());
-                    System.out.println(record.key() + record.value());
+                    JSONObject json = new JSONObject(record.value());
+                    writer.write(json.getString("message") + ", ");
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
