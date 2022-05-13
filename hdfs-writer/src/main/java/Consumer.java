@@ -8,11 +8,11 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 
 public class Consumer {
     public static void main(String[] args) throws Exception {
-        if(args.length == 0){
-            System.out.println("topic name must be passed as a parameter");
-            return;
-        }
-        String topicName = args[0].toString();
+        // if(args.length == 0){
+        // System.out.println("topic name must be passed as a parameter");
+        // return;
+        // }
+        String topicName = "filebeats";
         Properties props = new Properties();
 
         props.put("bootstrap.servers", "kafka://localhost:9093");
@@ -31,18 +31,20 @@ public class Consumer {
 
         HDFSWriter writer = new HDFSWriter(new URI("hdfs://localhost:9000/"), "/user/root/target-logs/logs.txt");
 
-        while(true) {
+        while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
-            for (ConsumerRecord<String, String> record : records){
+            for (ConsumerRecord<String, String> record : records) {
                 try {
+
+                    System.out.println(record.value());
+
                     JSONObject json = new JSONObject(record.value());
                     writer.write(json.getString("message") + ", ");
-                }catch (Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
-
 
     }
 }
